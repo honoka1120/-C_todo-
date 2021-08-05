@@ -3,7 +3,11 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
+<<<<<<< HEAD
       <router-link to="/addtodo">Addtodo</router-link>
+=======
+      <router-link to="/todolist">todolist</router-link>
+>>>>>>> 4bcd0517ab84045872b22324bb493b8bc2207531
     </div>
     <router-view/>
   </div>
