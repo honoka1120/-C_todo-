@@ -12,15 +12,14 @@
                 <td>削除</td>
                 <td>編集</td>
             </tr>
-            <tr>
-                <!-- これをv-forで回していく -->
-                <td>dataメソッド</td>
-                <td>todoリストさくせい</td>
-                <td>ああああああああああ</td>
-                <td>明日</td>
-                <td>5％</td>
-                <td>頑張る</td>
-                <td><button @click="deleteConfirm">削除</button></td>
+            <tr v-for="(list,index) in $store.state.todolist" :key="index">
+                <td>{{list.date}}</td>
+                <td>{{list.title}}</td>
+                <td>{{list.content}}</td>
+                <td>{{list.limit}}</td>
+                <td>{{list.progress}}</td>
+                <td>{{list.memo}}</td>
+                <td><button @click="deleteConfirm(index)">削除</button></td>
                 <td><button>編集</button></td>
             </tr>
         </table>
@@ -28,13 +27,15 @@
 </template>
 
 <script>
+import {mapActions} from "vuex"
 export default {
     methods:{
-        deleteConfirm(){
+        deleteConfirm(index){
             if(confirm("削除してもよろしいですか？")){
-                //削除のactionを呼び出す
+                this.deleteTodo(index)
             }
-        }
+        },
+        ...mapActions(["deleteTodo"])
     }
 }
-</script>
+  </script>
