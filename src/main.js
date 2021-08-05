@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import firebase from 'firebase'
 Vue.config.productionTip = false
-// Your web app's Firebase configuration
+  // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   var firebaseConfig = {
     apiKey: "AIzaSyDkbappHTM02ID2pyx8UNkgRJz7akpbRsA",
@@ -18,6 +18,7 @@ Vue.config.productionTip = false
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+
 new Vue({
   router,
   store,
