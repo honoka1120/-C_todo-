@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-<<<<<<< HEAD
 import TodoList from '../views/TodoList.vue'
-=======
 import Addtodo from '../views/Addtodo.vue'
->>>>>>> add
 
 Vue.use(VueRouter)
 
@@ -24,17 +21,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-<<<<<<< HEAD
     path: '/todolist',
     namme: 'TodoList',
     component: TodoList
-  }
-=======
+  },
+  {
     path: '/addtodo',
     name: 'Addtodo',
     component: Addtodo
   },
->>>>>>> add
 ]
 
 const router = new VueRouter({
