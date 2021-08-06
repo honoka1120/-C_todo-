@@ -32,7 +32,7 @@ const routes = [
     component: Addtodo
   },
   {
-    path: '/todolist/:todo_item/edit',
+    path: '/todolist/:todo_item?/edit',
     name: 'TodoEdit',
     component: TodoEdit
   }
