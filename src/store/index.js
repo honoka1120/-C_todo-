@@ -68,6 +68,10 @@ export default new Vuex.Store({
       commit('addTodo')
     },
   },
+  getters:{
+    userName:state => state.loginUser? state.loginUser.displayName:"",
+    photoURL:state => state.loginUser? state.loginUser.photoURL:""
+  },
   modules: {
   }
 })

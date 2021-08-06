@@ -2,7 +2,11 @@
   <div class="top">
     <h1>📚 ToDoList 📚</h1>
 
+    <div v-if="!$store.state.loginUser">
     <button @click="login">Googleアカウントでログイン</button>
+    </div>
+    <div>{{userName}}</div>
+    <div><img v-if="photoURL" :src="photoURL"/></div>
     <!-- ログインしてない時は表示されない -->
     <div v-if="$store.state.loginUser">
     <button @click="logout">ログアウト</button>
@@ -20,7 +24,7 @@
 //     HelloWorld
 //   }
 // }
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import firebase from 'firebase'
 export default {
       created() {
@@ -38,6 +42,9 @@ export default {
     }),
     methods:{
       ...mapActions(["login","setLoginUser","deleteLoginUser","logout"])
+    },
+    computed:{
+      ...mapGetters(["userName","photoURL"])
     }
   }
 </script>
