@@ -7,17 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loginUser : null,
-
-    todolist: [{
-      date:"dateメソッド",
-      title:"todoリスト作成",
-      content:"aaaaaaa",
-      limit:"tomorrow",
-      progress:"5%",
-      memo:"頑張る",
-    },
-  ],
-
+    todoList: [],
+    todo:{},
   },
   mutations: {
     setLoginUser(state,user){
@@ -28,8 +19,26 @@ export default new Vuex.Store({
     },
 
     deleteTodo(state,index){
-      state.todolist.splice(index,1)
-    }
+      state.todoList.splice(index,1)
+    },
+
+    addTodo(state) {
+        const date1 = new Date();
+        const date2 =
+          date1.getFullYear() +
+          "年" +
+          (date1.getMonth() + 1) +
+          "月" +
+          date1.getDate() +
+          "日";
+      if(Object.keys(state.todo).length===0){
+        alert('情報を入力してください')
+      }else{
+        state.todo.date=date2,
+        state.todoList.push(state.todo),
+        state.todo={}
+      }
+    },
   },
   actions: {
     setLoginUser({commit},user){
@@ -50,7 +59,13 @@ export default new Vuex.Store({
     deleteTodo({commit},index){
       //引数にv-forで回して入れたやつをとる
       commit('deleteTodo',index)
-    }
+    },
+    getDate({commit}){
+      commit('getDate')
+    },
+    addTodo({commit}){
+      commit('addTodo')
+    },
   },
   modules: {
   }
