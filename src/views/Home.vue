@@ -1,6 +1,8 @@
 <template>
   <div class="top">
     <h1>📚 ToDoList 📚</h1>
+
+    <button @click="login">Googleアカウントでログイン</button>
   </div>
 </template>
 
@@ -14,4 +16,10 @@
 //     HelloWorld
 //   }
 // }
+import {mapActions} from 'vuex'
+export default {
+  methods:{
+    ...mapActions(['login']),
+  }
+}
 </script>
