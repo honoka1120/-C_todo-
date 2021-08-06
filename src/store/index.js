@@ -19,7 +19,6 @@ export default new Vuex.Store({
     },
 
     deleteTodo(state,index){
-      state.todolist.splice(index,1)
       state.todoList.splice(index,1)
     },
 
@@ -40,6 +39,10 @@ export default new Vuex.Store({
         state.todo={}
       }
     },
+    editTodo(state,todo){
+      const index =state.todoList.findIndex((ele) => ele.todo = todo)
+      state.todoList[index] = todo
+    }
   },
   actions: {
     setLoginUser({commit},user){
@@ -61,12 +64,12 @@ export default new Vuex.Store({
       //引数にv-forで回して入れたやつをとる
       commit('deleteTodo',index)
     },
-    getDate({commit}){
-      commit('getDate')
-    },
     addTodo({commit}){
       commit('addTodo')
     },
+    editTodo({commit},todo){
+      commit('editTodo',todo)
+    }
   },
   modules: {
   }

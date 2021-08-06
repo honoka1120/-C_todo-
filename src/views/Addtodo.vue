@@ -10,6 +10,7 @@
         min="0"
         max="100"
         step="10"
+        value="0"
         v-model="$store.state.todo.progress"
       />
       {{ $store.state.todo.progress }} %

@@ -17,7 +17,7 @@
                 <td>{{list.title}}</td>
                 <td>{{list.content}}</td>
                 <td>{{list.limit}}</td>
-                <td>{{list.progress}}</td>
+                <td>{{list.progress}}%</td>
                 <td>{{list.memo}}</td>
                 <td><button @click="deleteConfirm(index)">削除</button></td>
                 <!-- 編集ボタンを押したらその値を渡しつつ編集画面へ -->
