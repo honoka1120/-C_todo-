@@ -71,6 +71,10 @@ export default new Vuex.Store({
       commit('editTodo',todo)
     }
   },
+  getters:{
+    userName:state => state.loginUser? state.loginUser.displayName:"",
+    photoURL:state => state.loginUser? state.loginUser.photoURL:""
+  },
   modules: {
   }
 })
