@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import TodoList from '../views/TodoList.vue'
 import Addtodo from '../views/Addtodo.vue'
+import TodoEdit from '../views/TodoEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,7 @@ const routes = [
   },
   {
     path: '/todolist',
-    namme: 'TodoList',
+    name: 'TodoList',
     component: TodoList
   },
   {
@@ -30,6 +31,11 @@ const routes = [
     name: 'Addtodo',
     component: Addtodo
   },
+  {
+    path: '/todolist/:todo_item/edit',
+    name: 'TodoEdit',
+    component: TodoEdit
+  }
 ]
 
 const router = new VueRouter({

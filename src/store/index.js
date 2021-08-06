@@ -29,7 +29,7 @@ export default new Vuex.Store({
 
     deleteTodo(state,index){
       state.todolist.splice(index,1)
-    }
+    },
   },
   actions: {
     setLoginUser({commit},user){
@@ -50,7 +50,7 @@ export default new Vuex.Store({
     deleteTodo({commit},index){
       //引数にv-forで回して入れたやつをとる
       commit('deleteTodo',index)
-    }
+    },
   },
   modules: {
   }
