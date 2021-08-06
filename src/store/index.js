@@ -52,6 +52,10 @@ export default new Vuex.Store({
       commit('deleteTodo',index)
     }
   },
+  getters:{
+    userName:state => state.loginUser? state.loginUser.displayName:"",
+    photoURL:state => state.loginUser? state.loginUser.photoURL:""
+  },
   modules: {
   }
 })
