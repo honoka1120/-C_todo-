@@ -3,6 +3,10 @@
     <h1>📚 ToDoList 📚</h1>
 
     <button @click="login">Googleアカウントでログイン</button>
+    <!-- ログインしてない時は表示されない -->
+    <div v-if="$store.state.loginUser">
+    <button @click="logout">ログアウト</button>
+    </div>
   </div>
 </template>
 
@@ -17,9 +21,23 @@
 //   }
 // }
 import {mapActions} from 'vuex'
+import firebase from 'firebase'
 export default {
-  methods:{
-    ...mapActions(['login']),
+      created() {
+      firebase.auth().onAuthStateChanged(user => {
+        console.log(user)
+        if (user) {
+          this.setLoginUser(user);
+        } else {
+          this.deleteLoginUser();
+        }
+      });
+    },
+    data:() => ({
+      //
+    }),
+    methods:{
+      ...mapActions(["login","setLoginUser","deleteLoginUser","logout"])
+    }
   }
-}
 </script>

@@ -12,7 +12,7 @@
                 <td>削除</td>
                 <td>編集</td>
             </tr>
-            <tr v-for="(list,index) in $store.state.todolist" :key="index">
+            <tr v-for="(list,index) in $store.state.todoList" :key="index">
                 <td>{{list.date}}</td>
                 <td>{{list.title}}</td>
                 <td>{{list.content}}</td>
@@ -30,6 +30,7 @@
 <script>
 import {mapActions} from "vuex"
 export default {
+    name:'TodoList',
     methods:{
         deleteConfirm(index){
             if(confirm("削除してもよろしいですか？")){

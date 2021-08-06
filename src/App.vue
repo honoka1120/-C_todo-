@@ -7,6 +7,7 @@
       <router-link to="/addtodo">Addtodo</router-link>
     </div>
     <router-view/>
+
   </div>
 </template>
 
