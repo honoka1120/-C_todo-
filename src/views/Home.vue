@@ -25,24 +25,12 @@
 //   }
 // }
 import {mapActions, mapGetters} from 'vuex'
-import firebase from 'firebase'
 export default {
-      created() {
-      firebase.auth().onAuthStateChanged(user => {
-        console.log(user)
-        if (user) {
-          this.setLoginUser(user);
-          this.fetchTodoList()
-        } else {
-          this.deleteLoginUser();
-        }
-      });
-    },
     data:() => ({
       //
     }),
     methods:{
-      ...mapActions(["login","setLoginUser","deleteLoginUser","logout","fetchTodoList"])
+      ...mapActions(["login","logout"])
     },
     computed:{
       ...mapGetters(["userName","photoURL"])

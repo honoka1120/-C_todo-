@@ -22,24 +22,10 @@ export default new Vuex.Store({
       state.todoList.splice(index,1)
     },
 
-    addTodo(state,{id,todo}){
-      todo.id =id;
-      state.todoList.push(todo);
-        const date1 = new Date();
-        const date2 =
-          date1.getFullYear() +
-          "年" +
-          (date1.getMonth() + 1) +
-          "月" +
-          date1.getDate() +
-          "日";
-      if(Object.keys(state.todo).length===0){
-        alert('情報を入力してください')
-      }else{
-        state.todo.date=date2,
-        state.todoList.push(state.todo),
+    addTodo(state,{id,addtodo}){
+      addtodo.id = id;
+        state.todoList.push(addtodo),
         state.todo={}
-      }
     },
     editTodo(state,todo){
       const index =state.todoList.findIndex((ele) => ele.todo = todo)
@@ -66,24 +52,37 @@ export default new Vuex.Store({
       //引数にv-forで回して入れたやつをとる
       commit('deleteTodo',index)
     },
-    addTodo({commit}){
-      commit('addTodo')
-    },
     editTodo({commit},todo){
       commit('editTodo',todo)
     },
     addTodo({getters,commit}){
+      const date1 = new Date();
+      const date2 =
+        date1.getFullYear() +
+        "年" +
+        (date1.getMonth() + 1) +
+        "月" +
+        date1.getDate() +
+        "日";
+    // if(Object.keys(state.todo).length===0){
+    //   alert('情報を入力してください')
+    // }else{
+      this.state.todo.date=date2
+
       if(getters.uid){
-        firebase.firestore().collection(`users/${getters.uid}/todoList`)
-        .add(this.state.todo).then((doc) => {
-          commit('addTodo',{id:doc.id,todo:this.state.todo})
+        firebase
+        .firestore()
+        .collection(`users/${getters.uid}/todoList`)
+        .add(this.state.todo)
+        .then((doc) =>{
+          commit("addTodo",{id:doc.id,addtodo:this.state.todo})
         })
       }
     },
     // firebaseデータ取得
     fetchTodoList ({getters,commit}){
       firebase.firestore().collection(`users/${getters.uid}/todoList`).get().then(snapshot =>{
-        snapshot.forEach(doc => commit('addTodo',{id:doc.id,todoList: doc.data()}))
+        snapshot.forEach(doc => commit('addTodo',{id:doc.id,addtodo: doc.data()}))
       })
     }
   },

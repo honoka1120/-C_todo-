@@ -11,6 +11,28 @@
   </div>
 </template>
 
+<script>
+import firebase from 'firebase'
+import {mapActions} from 'vuex'
+export default {
+      created() {
+      firebase.auth().onAuthStateChanged(user => {
+        console.log(user)
+        if (user) {
+          this.setLoginUser(user);
+          this.fetchTodoList()
+        } else {
+          this.deleteLoginUser();
+        }
+      });
+    },
+      methods:{
+      ...mapActions(["setLoginUser","deleteLoginUser","fetchTodoList"])
+    },
+}
+</script>
+
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
