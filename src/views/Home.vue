@@ -32,6 +32,7 @@ export default {
         console.log(user)
         if (user) {
           this.setLoginUser(user);
+          this.fetchTodoList()
         } else {
           this.deleteLoginUser();
         }
@@ -41,7 +42,7 @@ export default {
       //
     }),
     methods:{
-      ...mapActions(["login","setLoginUser","deleteLoginUser","logout"])
+      ...mapActions(["login","setLoginUser","deleteLoginUser","logout","fetchTodoList"])
     },
     computed:{
       ...mapGetters(["userName","photoURL"])

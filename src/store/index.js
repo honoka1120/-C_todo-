@@ -23,7 +23,9 @@ export default new Vuex.Store({
       state.todoList.splice(index,1)
     },
 
-    addTodo(state) {
+    addTodo(state,{id,todo}){
+      todo.id =id;
+      state.todoList.push(todo);
         const date1 = new Date();
         const date2 =
           date1.getFullYear() +
@@ -64,13 +66,27 @@ export default new Vuex.Store({
     getDate({commit}){
       commit('getDate')
     },
-    addTodo({commit}){
-      commit('addTodo')
+    addTodo({getters,commit}){
+      if(getters.uid){
+        firebase.firestore().collection(`users/${getters.uid}/todoList`)
+        .add(this.state.todo).then((doc) => {
+          commit('addTodo',{id:doc.id,todo:this.state.todo})
+        })
+      }
     },
+    // firebaseデータ取得
+    fetchTodoList ({getters,commit}){
+      firebase.firestore().collection(`users/${getters.uid}/todoList`).get().then(snapshot =>{
+        snapshot.forEach(doc => commit('addTodo',{id:doc.id,todoList: doc.data()}))
+      })
+    }
   },
   getters:{
     userName:state => state.loginUser? state.loginUser.displayName:"",
-    photoURL:state => state.loginUser? state.loginUser.photoURL:""
+    photoURL:state => state.loginUser? state.loginUser.photoURL:"",
+    uid:(state) => (state.loginUser?state.loginUser.uid : null),
+    getAddressById:(state) => (id) =>
+    state.todoList.find((todo)=>todo.id === id),
   },
   modules: {
   }
