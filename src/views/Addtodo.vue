@@ -1,17 +1,11 @@
 <template>
   <div class="addtodo">
     <div>作成日：{{ getDate() }}</div>
-    <div>タイトル：<input type="text" v-model="$store.state.todo.title" /></div>
-    <div>内容：<input type="text" v-model="$store.state.todo.content" /></div>
-    <div>期日：<input type="date" v-model="$store.state.todo.limit" /></div>
+    <div>タイトル：<input type="text" v-model="$store.state.todo.title"></div>
+    <div>内容：<input type="text" v-model="$store.state.todo.content"></div>
+    <div>期日：<input type="date" v-model="$store.state.todo.limit"></div>
     <div>
-      進捗率：<input
-        type="range"
-        min="0"
-        max="100"
-        step="10"
-        v-model="$store.state.todo.progress"
-      />
+      進捗率：<input type="range" min="0" max="100" value="0" step="10" v-model="$store.state.todo.progress" >
       {{ $store.state.todo.progress }} %
     </div>
     <div>メモ</div>
@@ -37,7 +31,7 @@ export default {
         "日";
       return date2;
     },
-    ...mapActions(["addTodo",]),
+    ...mapActions(["addTodo"]),
   },
 };
 </script>
