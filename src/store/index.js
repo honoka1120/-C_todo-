@@ -27,8 +27,9 @@ export default new Vuex.Store({
         state.todoList.push(addtodo),
         state.todo={}
     },
-    editTodo(state,todo){
-      const index =state.todoList.findIndex((ele) => ele.todo = todo)
+    editTodo(state,{id,todo}){
+      console.log(todo)
+      const index =state.todoList.findIndex((ele) => ele.id = id)
       state.todoList[index] = todo
     }
   },
@@ -52,8 +53,18 @@ export default new Vuex.Store({
       //引数にv-forで回して入れたやつをとる
       commit('deleteTodo',index)
     },
-    editTodo({commit},todo){
-      commit('editTodo',todo)
+    editTodo({getters,commit},{id,todo}){
+      console.log(todo)
+      if(getters.uid){
+        firebase
+        .firestore()
+        .collection(`users/${getters.uid}/todoList`)
+        .doc(id)
+        .update(todo)
+        .then(() => {
+          commit("editTodo",{id,todo})
+        })
+      }
     },
     addTodo({getters,commit}){
       const date1 = new Date();
@@ -84,13 +95,13 @@ export default new Vuex.Store({
       firebase.firestore().collection(`users/${getters.uid}/todoList`).get().then(snapshot =>{
         snapshot.forEach(doc => commit('addTodo',{id:doc.id,addtodo: doc.data()}))
       })
-    }
+    },
   },
   getters:{
     userName:state => state.loginUser? state.loginUser.displayName:"",
     photoURL:state => state.loginUser? state.loginUser.photoURL:"",
     uid:(state) => (state.loginUser?state.loginUser.uid : null),
-    getAddressById:(state) => (id) =>
+    getTodoById:(state) => (id) =>
     state.todoList.find((todo)=>todo.id === id),
   },
   modules: {

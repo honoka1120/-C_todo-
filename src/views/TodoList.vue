@@ -21,7 +21,11 @@
                 <td>{{list.memo}}</td>
                 <td><button @click="deleteConfirm(index)">削除</button></td>
                 <!-- 編集ボタンを押したらその値を渡しつつ編集画面へ -->
-                <td><button @click="edit(list)">編集</button></td>
+                <td>
+                    <router-link :to="{name:'TodoEdit',params:{todo_item:list.id}}">
+                        <button>編集</button>
+                    </router-link>
+                </td>
             </tr>
         </table>
     </div>
@@ -36,9 +40,6 @@ export default {
             if(confirm("削除してもよろしいですか？")){
                 this.deleteTodo(index)
             }
-        },
-        edit(list){
-            this.$router.push({name:'TodoEdit', params:{todo_item:list}})
         },
         ...mapActions(["deleteTodo"])
     }
