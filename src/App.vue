@@ -23,6 +23,7 @@ export default {
           this.fetchTodoList()
         } else {
           this.deleteLoginUser();
+          this.$store.state.todoList = []
         }
       });
     },

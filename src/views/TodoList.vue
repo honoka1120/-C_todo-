@@ -19,7 +19,7 @@
                 <td>{{list.limit}}</td>
                 <td>{{list.progress}}%</td>
                 <td>{{list.memo}}</td>
-                <td><button @click="deleteConfirm(index)">削除</button></td>
+                <td><button @click="deleteConfirm(list.id)">削除</button></td>
                 <!-- 編集ボタンを押したらその値を渡しつつ編集画面へ -->
                 <td>
                     <router-link :to="{name:'TodoEdit',params:{todo_item:list.id}}">
@@ -36,9 +36,9 @@ import {mapActions} from "vuex"
 export default {
     name:'TodoList',
     methods:{
-        deleteConfirm(index){
+        deleteConfirm(id){
             if(confirm("削除してもよろしいですか？")){
-                this.deleteTodo(index)
+                this.deleteTodo({id})
             }
         },
         ...mapActions(["deleteTodo"])

@@ -9,6 +9,7 @@
     <textarea v-model="todo1.memo"></textarea>
     </div>
     <button @click="submit()">編集</button>
+    <router-link :to="{name:'TodoList'}"><button>一覧へ戻る</button></router-link>
   </div>
 </template>
 
@@ -24,12 +25,13 @@ export default {
         const todo = this.$store.getters.getTodoById(
             this.$route.params.todo_item
         )
-        if(todo){
+        
         this.todo1 = todo
-        }
+        
     },
     methods:{
         submit(){
+            console.log(this.todo1)
             this.editTodo(this.todo1)
             this.$router.push({name:"TodoList"})
         },

@@ -6,67 +6,70 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loginUser : null,
+    loginUser: null,
     todoList: [],
-    todo:{},
+    todo: {},
   },
   mutations: {
-    setLoginUser(state,user){
+    setLoginUser(state, user) {
       state.loginUser = user
     },
-    deleteLoginUser(state){
+    deleteLoginUser(state) {
       state.loginUser = null
     },
 
-    deleteTodo(state,index){
+    deleteTodo(state, {id}) {
+      const index=state.todoList.findIndex(todo=>todo.id===id)
       state.todoList.splice(index,1)
     },
 
-    addTodo(state,{id,addtodo}){
+    addTodo(state, { id, addtodo }) {
       addtodo.id = id;
-        state.todoList.push(addtodo),
-        state.todo={}
+      state.todoList.push(addtodo),
+      state.todo = {}
     },
-    editTodo(state,{id,todo}){
-      console.log(todo)
-      const index =state.todoList.findIndex((ele) => ele.id = id)
-      state.todoList[index] = todo
+    editTodo(state,todo1){
+      const index =state.todoList.findIndex((ele) => ele.id = todo1.id)
+      state.todoList[index] = todo1
     }
   },
   actions: {
-    setLoginUser({commit},user){
-      commit('setLoginUser',user)
+    setLoginUser({ commit }, user) {
+      commit('setLoginUser', user)
     },
-    login(){
+    login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
       firebase.auth().signInWithRedirect(google_auth_provider)
     },
     // ログアウト
-    logout(){
+    logout() {
       firebase.auth().signOut()
     },
-    deleteLoginUser({commit}){
+    deleteLoginUser({ commit }) {
       commit('deleteLoginUser')
     },
 
-    deleteTodo({commit},index){
-      //引数にv-forで回して入れたやつをとる
-      commit('deleteTodo',index)
+    deleteTodo({ getters,commit }, {id}) {
+      if(getters.uid){
+        firebase.firestore().collection(`users/${getters.uid}/todoList`).doc(id).delete().then(()=>{
+          commit('deleteTodo',{id})
+        })
+      }
     },
-    editTodo({getters,commit},{id,todo}){
-      console.log(todo)
+    editTodo({getters,commit},todo1){
       if(getters.uid){
         firebase
         .firestore()
         .collection(`users/${getters.uid}/todoList`)
-        .doc(id)
-        .update(todo)
+        .doc(todo1.id)
+        .update(todo1)
         .then(() => {
-          commit("editTodo",{id,todo})
+          commit("editTodo",todo1)
         })
       }
     },
-    addTodo({getters,commit}){
+
+    addTodo({ getters, commit }) {
       const date1 = new Date();
       const date2 =
         date1.getFullYear() +
@@ -75,25 +78,25 @@ export default new Vuex.Store({
         "月" +
         date1.getDate() +
         "日";
-    // if(Object.keys(state.todo).length===0){
-    //   alert('情報を入力してください')
-    // }else{
-      this.state.todo.date=date2
-
-      if(getters.uid){
-        firebase
-        .firestore()
-        .collection(`users/${getters.uid}/todoList`)
-        .add(this.state.todo)
-        .then((doc) =>{
-          commit("addTodo",{id:doc.id,addtodo:this.state.todo})
-        })
+      if (Object.keys(this.state.todo).length === 0) {
+        alert('情報を入力してください')
+      } else {
+        this.state.todo.date = date2
+        if (getters.uid) {
+          firebase
+            .firestore()
+            .collection(`users/${getters.uid}/todoList`)
+            .add(this.state.todo)
+            .then((doc) => {
+              commit("addTodo", { id: doc.id, addtodo: this.state.todo })
+            })
+        }
       }
     },
     // firebaseデータ取得
-    fetchTodoList ({getters,commit}){
-      firebase.firestore().collection(`users/${getters.uid}/todoList`).get().then(snapshot =>{
-        snapshot.forEach(doc => commit('addTodo',{id:doc.id,addtodo: doc.data()}))
+    fetchTodoList({ getters, commit }) {
+      firebase.firestore().collection(`users/${getters.uid}/todoList`).get().then(snapshot => {
+        snapshot.forEach(doc => commit('addTodo', { id: doc.id, addtodo: doc.data() }))
       })
     },
   },
