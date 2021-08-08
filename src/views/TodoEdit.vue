@@ -31,9 +31,12 @@ export default {
     },
     methods:{
         submit(){
-            console.log(this.todo1)
-            this.editTodo(this.todo1)
+            this.editTodo({
+                id:this.$route.params.todo_item,
+                todo:this.todo1
+            })
             this.$router.push({name:"TodoList"})
+            this.todo1 = {}
         },
         ...mapActions(["editTodo"])
     },

@@ -28,9 +28,9 @@ export default new Vuex.Store({
       state.todoList.push(addtodo),
       state.todo = {}
     },
-    editTodo(state,todo1){
-      const index =state.todoList.findIndex((ele) => ele.id = todo1.id)
-      state.todoList[index] = todo1
+    editTodo(state,{id,todo}){
+      const index =state.todoList.findIndex((todo) => todo.id === id)
+      state.todoList[index] = todo
     }
   },
   actions: {
@@ -56,15 +56,15 @@ export default new Vuex.Store({
         })
       }
     },
-    editTodo({getters,commit},todo1){
+    editTodo({getters,commit},{id,todo}){
       if(getters.uid){
         firebase
         .firestore()
         .collection(`users/${getters.uid}/todoList`)
-        .doc(todo1.id)
-        .update(todo1)
+        .doc(id)
+        .update(todo)
         .then(() => {
-          commit("editTodo",todo1)
+          commit("editTodo",{id,todo})
         })
       }
     },
